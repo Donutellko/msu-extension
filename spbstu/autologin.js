@@ -1,34 +1,22 @@
 console.log("Started autologin extension")
 
-const LOCAL_STORAGE_PLATFORM_USERNAME = 'spbstu_username'
-const LOCAL_STORAGE_PLATFORM_PASSWORD = 'spbstu_password'
+// Example: https://lk.spbstu.ru
+let gotoCasButton = document.querySelector('#bx_auth_href_spbstu_cas')
+if (gotoCasButton) {
+    console.log("gotoCasButton", gotoCasButton)
+    gotoCasButton.click()
+}
 
-let usernameField = document.getElementById('user')
-let passwordField = document.getElementById('password')
+// Example: https://dl.spbstu.ru/login/index.php
+let gotoCasButton2 = document.querySelector('#page-login-index .auth0-lock-social-button')
+if (gotoCasButton2) {
+    console.log("gotoCasButton2", gotoCasButton2)
+    gotoCasButton2.click()
+}
 
-let loginButton = document.getElementById('doLogin')
-//
-let savedUsername = localStorage[LOCAL_STORAGE_PLATFORM_USERNAME]
-let savedPassword = localStorage[LOCAL_STORAGE_PLATFORM_PASSWORD]
-
-if (!usernameField.value && savedUsername) usernameField.value = savedUsername
-if (!passwordField.value && savedPassword) passwordField.value = savedPassword
-
-let errorText = document.querySelector('.form_alert')
-
-if (usernameField.value
-    && passwordField.value
-    && !errorText) {
-
-    console.log("CLICK!", usernameField.value, passwordField.value)
-    loginButton.disabled = false
-    loginButton.click()
-    loginButton.style.background = 'grey'
-    loginButton.style.cursor = 'wait'
-
-} else {
-    loginButton.onclick = () => {
-        localStorage[LOCAL_STORAGE_PLATFORM_USERNAME] = usernameField.value
-        localStorage[LOCAL_STORAGE_PLATFORM_PASSWORD] = passwordField.value
-    }
+// Example: https://dl.spbstu.ru
+let gotoLoginButton = document.querySelector('.usermenu .login a')
+if (gotoLoginButton) {
+    console.log("gotoLoginButton", gotoLoginButton)
+    gotoLoginButton.click()
 }

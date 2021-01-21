@@ -1,6 +1,6 @@
 {
     "name": "MSU Extension (my small utility)",
-    "version": "1.0",
+    "version": "1.1",
     "manifest_version": 2,
 
 	"browser_action": {
@@ -8,8 +8,13 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["*://cas.spbstu.ru/login*"],
+			"matches": ["*://*.spbstu.ru/*"],
 			"js": ["spbstu/autologin.js"],
+			"run_at": "document_idle",
+			"all_frames": true
+		}, {
+			"matches": ["*://cas.spbstu.ru/login*"],
+			"js": ["spbstu/autologin_cas.js"],
 			"run_at": "document_idle",
 			"all_frames": true
 		}
