@@ -1,22 +1,20 @@
 console.log("Started autologin extension")
 
+let possibleButtons = {
 // Example: https://lk.spbstu.ru
-let gotoCasButton = document.querySelector('#bx_auth_href_spbstu_cas')
-if (gotoCasButton) {
-    console.log("gotoCasButton", gotoCasButton)
-    gotoCasButton.click()
-}
-
+    gotoCasButton: document.querySelector('#bx_auth_href_spbstu_cas'),
 // Example: https://dl.spbstu.ru/login/index.php
-let gotoCasButton2 = document.querySelector('#page-login-index .auth0-lock-social-button')
-if (gotoCasButton2) {
-    console.log("gotoCasButton2", gotoCasButton2)
-    gotoCasButton2.click()
+    gotoCasButton2: document.querySelector('#page-login-index .auth0-lock-social-button'),
+// Example: https://dl.spbstu.ru
+    gotoLoginButton: document.querySelector('.usermenu .login a')
 }
 
-// Example: https://dl.spbstu.ru
-let gotoLoginButton = document.querySelector('.usermenu .login a')
-if (gotoLoginButton) {
-    console.log("gotoLoginButton", gotoLoginButton)
-    gotoLoginButton.click()
+for (let buttonName in possibleButtons) {
+    let button = possibleButtons[buttonName]
+    if (button != null) {
+        console.log(`Found ${buttonName}. CLICK!`)
+        button.click()
+        button.style.background = 'grey'
+        button.style.cursor = 'wait'
+    }
 }
