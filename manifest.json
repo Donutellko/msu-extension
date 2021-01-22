@@ -1,7 +1,10 @@
 {
-    "name": "MSU Extension (my small utility)",
-    "version": "1.1",
+    "name": "MTWSCUU Extension",
+    "version": "1.1.1",
     "manifest_version": 2,
+	"icons": {
+		"128": "img/polypeka128.png"
+	},
 
 	"browser_action": {
 		"default_title": "Make my life a bit easier. Please."
@@ -19,9 +22,5 @@
 			"all_frames": true
 		}
 	],
-	"permissions": [
-		"activeTab",
-		"webNavigation",
-		"storage"
-	]
+	"permissions": []
  }
