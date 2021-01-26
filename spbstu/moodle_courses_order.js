@@ -5,8 +5,18 @@ function getCoursesList() {
     return Array.from(coursesList.children)
 }
 
+addDelimiter('courses-list-delimiter')
 restoreOrder()
 enableDragging()
+
+function addDelimiter(id) {
+    let delimiter = document.createElement('li')
+    delimiter.id = id
+    delimiter.href = 'delimiter'
+    delimiter.innerHTML = '<hr>'
+    delimiter.style.padding = '3px'
+    coursesList.append(delimiter)
+}
 
 function restoreOrder() {
     if (!localStorage['order']) return;
@@ -14,8 +24,12 @@ function restoreOrder() {
     let order = JSON.parse(localStorage['order'])
     let courses = {}
     getCoursesList().forEach((el) => {
-        let id = el.querySelector('a').href
-        courses[id] = el
+        let a = el.querySelector('a')
+        if (a != null) {
+            courses[a.href] = el
+        } else {
+            courses[el.id] = el
+        }
     })
     order.forEach((id) => {
         coursesList.append(courses[id])
@@ -49,7 +63,8 @@ function enableDragging() {
 function saveOrder() {
     let order = []
     getCoursesList().forEach((el) => {
-        order.push(el.querySelector('a').href)
+        let a = el.querySelector('a')
+        order.push(a !== null ? a.href : el.id)
     })
     localStorage['order'] = JSON.stringify(order)
 }
