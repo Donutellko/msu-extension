@@ -1,6 +1,6 @@
 {
     "name": "MTWSCUU Extension",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "manifest_version": 2,
 	"icons": {
 		"128": "img/polypeka128.png"
