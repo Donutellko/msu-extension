@@ -39,7 +39,7 @@ function addToggleButton() {
 function addNsfwToggleButton() {
     let text = FEATURE_MEMES_NSFW_ENABLED ? 'Выключить NSFW мемы' : 'Включить NSFW мемы'
     let onclick = () => {
-        localStorage[FEATURE_MEMES_NSFW] = !FEATURE_MEMES_ENABLED
+        localStorage[FEATURE_MEMES_NSFW] = !FEATURE_MEMES_NSFW_ENABLED
         location.reload()
     }
     addSettingButton('nsfw-toggle', text, onclick)
