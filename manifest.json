@@ -1,6 +1,6 @@
 {
     "name": "MTWSCUU Extension",
-    "version": "1.3",
+    "version": "1.4",
     "manifest_version": 2,
 	"icons": {
 		"128": "img/polypeka128.png"
@@ -23,6 +23,11 @@
 		}, {
 			"matches": ["*://*.spbstu.ru/*"],
 			"js": ["spbstu/moodle_courses_order.js"],
+			"run_at": "document_idle",
+			"all_frames": false
+		}, {
+			"matches": ["*://*.spbstu.ru/*"],
+			"js": ["spbstu/moodle_memefy_cards.js"],
 			"run_at": "document_idle",
 			"all_frames": false
 		}
