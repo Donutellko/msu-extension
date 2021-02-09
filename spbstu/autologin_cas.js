@@ -7,26 +7,48 @@ let usernameField = document.getElementById('user')
 let passwordField = document.getElementById('password')
 
 let loginButton = document.getElementById('doLogin')
-//
-let savedUsername = localStorage[LOCAL_STORAGE_PLATFORM_USERNAME]
-let savedPassword = localStorage[LOCAL_STORAGE_PLATFORM_PASSWORD]
+let logoutButton = document.getElementById('doLogout')
+let reloginButton = document.querySelector('a.underline')
 
-if (!usernameField.value && savedUsername) usernameField.value = savedUsername
-if (!passwordField.value && savedPassword) passwordField.value = savedPassword
+const NO_AUTOLOGIN_QUERY = '#no_autologin'
 
-let errorText = document.querySelector('.form_alert')
+if (loginButton) {
+    if (location.href.indexOf(NO_AUTOLOGIN_QUERY) < 0) {
+        doLogin()
+    } else {
+        onLoginSaveCredentials()
+    }
+} else if (logoutButton) {
+    logoutButton.href += NO_AUTOLOGIN_QUERY
+} else if (reloginButton) {
+    reloginButton.href += NO_AUTOLOGIN_QUERY
+}
 
-if (usernameField.value
-    && passwordField.value
-    && !errorText) {
+function doLogin() {
+    let savedUsername = localStorage[LOCAL_STORAGE_PLATFORM_USERNAME]
+    let savedPassword = localStorage[LOCAL_STORAGE_PLATFORM_PASSWORD]
 
-    console.log("CLICK!", usernameField.value, passwordField.value)
-    loginButton.disabled = false
-    loginButton.click()
-    loginButton.style.background = 'grey'
-    loginButton.style.cursor = 'wait'
+    if (!usernameField.value && savedUsername) usernameField.value = savedUsername
+    if (!passwordField.value && savedPassword) passwordField.value = savedPassword
 
-} else {
+    let errorText = document.querySelector('.form_alert')
+
+    if (usernameField.value
+        && passwordField.value
+        && !errorText) {
+
+        console.log("CLICK!", usernameField.value, passwordField.value)
+        loginButton.disabled = false
+        loginButton.click()
+        loginButton.style.background = 'grey'
+        loginButton.style.cursor = 'wait'
+
+    } else {
+        onLoginSaveCredentials()
+    }
+}
+
+function onLoginSaveCredentials() {
     loginButton.onclick = () => {
         localStorage[LOCAL_STORAGE_PLATFORM_USERNAME] = usernameField.value
         localStorage[LOCAL_STORAGE_PLATFORM_PASSWORD] = passwordField.value
