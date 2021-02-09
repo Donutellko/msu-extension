@@ -14,8 +14,14 @@ function memefyCards() {
     }
 
     memes.sort((a, b) => Math.random() - 0.5)
+
     for (let i = 0; i < cards.length; i++) {
-        memefyCard(cards[i], memes[i % memes.length])
+        let card = cards[i]
+
+        let meme = getConstantMeme(card)
+            || getKeywordMeme(card)
+            || memes[i % memes.length];
+        memefyCard(card, meme)
     }
 }
 
@@ -57,6 +63,98 @@ function addSettingButton(id, text, onclick) {
     if (container) {
         container.append(button)
     }
+}
+
+function getConstantMeme(card) {
+    if (!FEATURE_MEMES_NSFW_ENABLED) return null
+
+    let courseHref = card.parentElement.href
+    return constantMemes[courseHref];
+}
+
+function getKeywordMeme(card) {
+    if (!FEATURE_MEMES_NSFW_ENABLED) return null
+
+    let courseName = card.parentElement.parentElement.textContent
+    for (let keyword in keywordMemes) {
+        if (courseName.indexOf(keyword) >= 0) {
+            return getRandom(keywordMemes[keyword])
+        }
+    }
+    return null;
+}
+
+function getRandom(list) {
+    return list[Math.floor((Math.random()*list.length))];
+}
+
+let keywordMemes = {
+    'Сабинин': [
+        'https://sun9-55.userapi.com/impg/c857720/v857720338/1a71d6/Z-eOZIwpMqw.jpg?size=646x616&quality=96&proxy=1&sign=b0e36cacf53e89dd4e0453199bb0fa98&type=album',
+        'https://sun9-16.userapi.com/impg/c857720/v857720338/1a71e4/8xXuqw2NuRI.jpg?size=361x480&quality=96&proxy=1&sign=ad083fc58ba5472717094f46ad39d240&type=album',
+        'https://sun9-52.userapi.com/impf/c855232/v855232767/18f7e2/FwHA001SzgM.jpg?size=934x616&quality=96&proxy=1&sign=c9a5c4fd3431ebe67b5244543d0cf32b&type=album',
+        'https://sun9-75.userapi.com/impf/c851532/v851532848/d5145/AZqeUjv6anY.jpg?size=1400x1400&quality=96&proxy=1&sign=401652eecb017a476b5a3e6a807eec10&type=album',
+        'https://sun9-49.userapi.com/impf/c844216/v844216663/59889/1mAiVJyA_pM.jpg?size=1024x1200&quality=96&proxy=1&sign=03869cccbf6a06169315413a722783fd&type=album',
+        'https://sun9-11.userapi.com/impg/74kKfcR650RGEgZzucmt6xSZaVY9KiAvAm1_FQ/CELPgkEiHto.jpg?size=700x699&quality=96&proxy=1&sign=73fb094d6fd06be3704a5bd1bfeb1938&type=album',
+        'https://sun9-56.userapi.com/impg/zCY1bY6rkuXiCJTekwgX3fQREtScQaLCSlm3oQ/4KoULZD2NEY.jpg?size=520x831&quality=96&proxy=1&sign=b34472dc49c6676f279790525185c320&type=album'
+    ],
+    'Щукин': [
+        'https://sun9-28.userapi.com/impg/NxyijuPfulnGYhCedAfJWq1tEWdjqUb5ytJniA/qwd3ov8pfS4.jpg?size=735x1080&quality=96&proxy=1&sign=bea4397f269b75d2b39c7facd9d6926d&type=album',
+        'https://sun9-31.userapi.com/impf/c858332/v858332164/6d090/QwKsF00OvUo.jpg?size=1286x1707&quality=96&proxy=1&sign=c8eff6bcbb1fb034a020ce4992d80fa2&type=album',
+        'https://sun9-26.userapi.com/impf/c849132/v849132009/13914b/2k-3-SJn6BE.jpg?size=647x960&quality=96&proxy=1&sign=822e5870581eeb0f308cadf9529756d6&type=album',
+        'https://sun9-71.userapi.com/impf/c604626/v604626077/3d791/K8JL4tVt9dU.jpg?size=1280x639&quality=96&proxy=1&sign=443f47b8d6edc03bdd4663b6bcd8a75a&type=album',
+        'https://sun9-13.userapi.com/impf/c604626/v604626077/3d774/2JAPjb1AQ4E.jpg?size=644x323&quality=96&proxy=1&sign=6503d20933f6a5065d675b219eccb699&type=album',
+        'https://sun9-50.userapi.com/impf/c836737/v836737111/1dfb2/pPZFXa6pitQ.jpg?size=262x262&quality=96&proxy=1&sign=4c8d6d1d879d03439a0a3cb372a18e2f&type=album',
+        'https://sun9-28.userapi.com/impf/c626518/v626518077/2f653/NdlJjTinD3s.jpg?size=1280x720&quality=96&proxy=1&sign=a3342def239fc083b269b3abb5912df6&type=album',
+        'https://sun9-54.userapi.com/impg/a7wjdKqh08OECiOJs6HS6o7-kgzOzoeX8jvk_w/KsiFR3LKThE.jpg?size=716x368&quality=96&proxy=1&sign=ee3c9d032e556d4aec5abc7b3ca843b7&type=album',
+        'https://sun9-32.userapi.com/impg/Ea1Wuq2e7UJPVxZbkwSrE5FP7CXk9KPZ0pzaAg/Fhs5FnXBmdU.jpg?size=1024x568&quality=96&proxy=1&sign=941539880a572e9c23098390c13fde3f&type=album',
+        'https://sun9-13.userapi.com/impg/aol8QxURm4op_7IbomVYddrb9y4z36yAlcXFqQ/Z1g33phOHfs.jpg?size=303x512&quality=96&proxy=1&sign=c6e7f8ea0c29a73644aefc637daf157e&type=album',
+        'https://sun9-24.userapi.com/impg/GjPAQyAwaJf6OpHB9n7mBgFuxf6zarSR4DT9VA/iO5p4wMccpg.jpg?size=922x720&quality=96&proxy=1&sign=d12dd7f03fa9fdfd32839b913bb303b4&type=album'
+    ],
+    'Сергеев': [
+        'https://sun9-19.userapi.com/impf/c621704/v621704034/46881/4d9dCLGGQgI.jpg?size=442x588&quality=96&proxy=1&sign=64c0362b9704aa896106cd2c58060451&type=album'
+    ],
+    'Веремьев': [
+        'https://sun9-62.userapi.com/impg/Kmc2VDbYd0gfkeM3_OiRlIFRnpT4sFP9neSbyA/-3YoJaendtQ.jpg?size=208x410&quality=96&proxy=1&sign=7591c3dcb1d2b3eaf9e65b13b8fd30ab&type=album'
+    ],
+    'Белых': [
+        'https://sun9-61.userapi.com/impg/HDj9M9DofUjNS9fGeAS7dHvQ9PJlwN1TSJE3Hw/bKIOfho1ob0.jpg?size=896x1080&quality=96&proxy=1&sign=5afdfa6b853c3d7664470f33b410254c&type=album'
+    ],
+    'Пак': [
+        'https://sun9-8.userapi.com/impg/CZxIi7brVXWEDyw5VxofwcgT9J75Rj48_nYOsg/3rOZ-HnLLQM.jpg?size=1102x784&quality=96&proxy=1&sign=c1bf1330f93c8ce22d10bbaa1c70ce89&type=album',
+        'https://sun9-73.userapi.com/impf/c857524/v857524394/79415/LiS_epixFEs.jpg?size=600x600&quality=96&proxy=1&sign=6e43656e5c5b9ffce1f379cba2921ea7&type=album',
+        'https://sun9-68.userapi.com/impf/c824410/v824410829/5a70c/k34jPgXuT_U.jpg?size=1133x779&quality=96&proxy=1&sign=f6609f1fb2cd458dee25ae7b75075445&type=album',
+        'https://sun9-65.userapi.com/impf/jumFiSUV7DHdgOaNemCcNojQB3fVbbX2w9idcw/e2zKOdhFzOY.jpg?size=1080x1023&quality=96&proxy=1&sign=6ae0f9f69eb92c7db1cac7c005604abb&type=album',
+        'https://sun9-62.userapi.com/impg/M0-YH9YNIuAig6OApSwLKC2UymPrq6v6AHP68A/MqjOac3_TCM.jpg?size=200x310&quality=96&proxy=1&sign=36ee5d4c0fef135f6dceb9106581c30b&type=album',
+        'https://sun9-67.userapi.com/impg/JuEwsPKNjvUC7St9S0pygok6NK-uZ2F_wIq2DA/tdBwY8xqL_0.jpg?size=490x638&quality=96&proxy=1&sign=14cf8f9ee2c7c2918f581575772c6483&type=album'
+    ],
+    'Брык': [
+        'https://sun9-63.userapi.com/impf/c846420/v846420404/1bfe03/mpGBins4U4s.jpg?size=806x1280&quality=96&proxy=1&sign=f6ab64dc9e58913b88b61fb039e0667a&type=album',
+        'https://sun9-57.userapi.com/impf/c849128/v849128208/ec02f/HfrRRnWFgUQ.jpg?size=679x559&quality=96&proxy=1&sign=582b044d81bb847554f71968be57924e&type=album',
+    ],
+    'Коваленко': [
+        'https://sun9-33.userapi.com/impf/KOkxfpcJpoxKqMDfwAZgr8-abxGU5FX3rbVnQA/hjvZOjEIBLk.jpg?size=1080x1079&quality=96&proxy=1&sign=3ed802fa9d1f94078a0a3f4e6c07ab79&type=album',
+        'https://sun9-72.userapi.com/impf/6X1SiSpj26NsNulxEzemApdErIC8WncDI-DPTg/zqMN6rtKq-s.jpg?size=545x514&quality=96&proxy=1&sign=f0c917a6f47ab02d0927fc748fdce7ca&type=album',
+        'https://sun9-33.userapi.com/impf/Gk39gqh2-Di-hTXGbG71QkKaV4xxxNjN_npx0w/_PsOxdXfi4U.jpg?size=1292x800&quality=96&proxy=1&sign=36241fc372ace4f40377919789091a87&type=album',
+        'https://sun9-18.userapi.com/impf/4jRgBuD0zFFEe6GNo7NSXUeJw2K3L-6bn9P8Nw/nQdruMW3RK4.jpg?size=545x547&quality=96&proxy=1&sign=685f23e72cfb71c7c2e70720f7a36b10&type=album',
+        'https://sun9-32.userapi.com/impf/omzQLDOmc_AzslpVV9ECwmYYDZY-0rqKX39zoA/ufaF78CFmWU.jpg?size=392x228&quality=96&proxy=1&sign=6a844fa1835aba8c43d4e035c43a6f8c&type=album',
+
+    ],
+    'Щербаков': [
+        'https://sun9-62.userapi.com/impf/n9s-NREbvlTY69hkXo9douIvRFSdMg9hpmCibQ/3mZGpMHhGxo.jpg?size=700x948&quality=96&proxy=1&sign=d39d1035520ded8c2ce4343d15f9793d&type=album'
+    ],
+    'Тушканова': [
+        'https://sun9-32.userapi.com/impf/ytbitDVT7SdJPKU0XVfLZVpCZ9572WPJEIAZXQ/kFwIUZHEocE.jpg?size=512x473&quality=96&proxy=1&sign=aa923b244fb64d69aaba052aa21d6ecf&type=album',
+        'https://sun9-71.userapi.com/impf/nbbxALMFUGCc4H8OGQeM8Ilutq8vwVtAYa8yUA/uE_OI6EL1JQ.jpg?size=540x357&quality=96&proxy=1&sign=e785792b6b42911b8aeddec045b71309&type=album',
+        'https://sun9-1.userapi.com/impf/ZiJeUAF7Uwhm2WMh5HnkcqFTn5RsOwCkNaEJpQ/Gy6Jyg4cbiU.jpg?size=1084x484&quality=96&proxy=1&sign=b88ddc4555005746f448f22cb0640845&type=album',
+        'https://sun9-4.userapi.com/impf/8cDLI13bY_aiTaxQnMQDIIx7bZS3r-o4x4Ev5w/aIzecmyvmfM.jpg?size=498x343&quality=96&proxy=1&sign=31b4b38286ace41beddc5c4a777961e8&type=album'
+    ]
+}
+
+let constantMemes = {
+    'https://dl.spbstu.ru/course/view.php?id=307': 'https://sun9-61.userapi.com/impf/c848732/v848732376/d82/RDfMykrfLgQ.jpg?size=289x241&quality=96&proxy=1&sign=7165870e0a4bfee4bbbbfb5deec2a43a&type=album',
+    'https://dl.spbstu.ru/course/view.php?id=290': getRandom(keywordMemes['Щукин']), // Методика преподавания компьютерных наук Щукин
+    'https://dl.spbstu.ru/course/view.php?id=478': getRandom(keywordMemes['Щукин']), // Дипломное проектирование Щукин
 }
 
 let memes = [
